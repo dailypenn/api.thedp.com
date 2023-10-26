@@ -1,4 +1,4 @@
-import { Db, MongoClient, ServerApiVersion } from "mongodb";
+import { Collection, Document, MongoClient } from "mongodb";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -13,26 +13,24 @@ const ClientTheDP = new MongoClient(uri_thedp);
 const Client34St = new MongoClient(uri_34st);
 const ClientUTB = new MongoClient(uri_utb);
 
-async function run(client: MongoClient) {
+export default async (db: string, fn: (a: Collection<Document>) => void) => {
+  let client: MongoClient;
+  if(db === "thedp") client = ClientTheDP;
+  else if(db === "34st") client = Client34St;
+  else if(db === "utb") client = ClientUTB;
+  else {
+    throw new Error("INVALID DB NAME. Must be (thedp, 34st, utb)")
+  }
+
   try {
-    const database = client.db();
+    const database = client.db("Cluster");
     const articles = database.collection("articles");
-    const article = await articles.find().limit(1).next();
+    await fn(articles);
 
-    // const article = await articles.findOne({});
-
-    console.log(article);
-
-    // db_fn(client);
   } finally {
     // Ensures that the client will close when you finish/error
     await client.close();
   }
 }
 
-export default {
-  ClientTheDP,
-  Client34St,
-  ClientUTB,
-  run,
-}
+
