@@ -9,8 +9,7 @@
     "start": "ts-node src/app.ts",
     "dev": "nodemon src/app.ts",
     "format": "prettier --cache --write .",
-    "lint": "eslint . --ext .ts",
-    "prepare": "husky install"
+    "lint": "eslint . --ext .ts"
   },
   "devDependencies": {
     "@flydotio/dockerfile": "^0.4.10",
