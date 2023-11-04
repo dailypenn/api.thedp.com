@@ -2,7 +2,7 @@ import { Collection, Document, MongoClient } from 'mongodb';
 import dotenv from 'dotenv';
 dotenv.config();
 
-const USERNAME = 'luke';
+const USERNAME = process.env.USERNAME || 'luke';
 const PASSWORD = process.env.PASSWORD;
 
 const uri_thedp = `mongodb+srv://${USERNAME}:${PASSWORD}@dp.5aehsyo.mongodb.net/?retryWrites=true&w=majority`;
